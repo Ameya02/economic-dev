@@ -1,10 +1,6 @@
 import React from 'react';
 
 function AgeField({ value, onChange }) {
-  const handleKeyDown = (e) => {
-    // Prevent any keyboard input
-    e.preventDefault();
-  };
 
   return (
     <div>
@@ -14,7 +10,6 @@ function AgeField({ value, onChange }) {
         name="age"
         value={value}
         onChange={onChange}
-        onKeyDown={handleKeyDown} // Disables keyboard typing
         min="1"
         max="99"
         placeholder="Select age"

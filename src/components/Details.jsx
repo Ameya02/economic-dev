@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import GenderField from './GenderField';
 import AgeField from './AgeField';
 import ResidenceField from './ResidenceField';
 import CategoryField from './CategoryField';
-import SpeciallyAbledField from './SpeciallyAbledField';
+// import SpeciallyAbledField from './SpeciallyAbledField';
 import StudentField from './StudentField';
-import IncomeField from './IncomeField';
+// import IncomeField from './IncomeField';
 
 function Details() {
   const [step, setStep] = useState(0);
@@ -14,17 +15,18 @@ function Details() {
     age: '',
     residence: '',
     category: '',
-    speciallyAbled: '',
     isStudent: '',
-    income: '',
   });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleNext = () => {
-    setStep((prevStep) => Math.min(prevStep + 1, formSteps.length - 1));
+    if (isStepValid()) {
+      setStep((prevStep) => Math.min(prevStep + 1, formSteps.length - 1));
+    }
   };
 
   const handleBack = () => {
@@ -32,7 +34,22 @@ function Details() {
   };
 
   const handleSubmit = () => {
-    console.log(formData);
+    if (isFormComplete()) {
+      localStorage.setItem('formData', JSON.stringify(formData));
+      navigate('/chat'); // Navigate to the new route with data
+    }
+  };
+
+  // Check if the current step's field is filled
+  const isStepValid = () => {
+    const fieldNames = ['gender', 'age', 'residence', 'category', 'speciallyAbled', 'isStudent', 'income'];
+    const currentFieldName = fieldNames[step];
+    return formData[currentFieldName] !== '';
+  };
+
+  // Check if all fields are filled for the submit button
+  const isFormComplete = () => {
+    return Object.values(formData).every((value) => value !== '');
   };
 
   const formSteps = [
@@ -40,9 +57,9 @@ function Details() {
     <AgeField value={formData.age} onChange={handleChange} />,
     <ResidenceField value={formData.residence} onChange={handleChange} />,
     <CategoryField value={formData.category} onChange={handleChange} />,
-    <SpeciallyAbledField value={formData.speciallyAbled} onChange={handleChange} />,
+    // <SpeciallyAbledField value={formData.speciallyAbled} onChange={handleChange} />,
     <StudentField value={formData.isStudent} onChange={handleChange} />,
-    <IncomeField value={formData.income} onChange={handleChange} />,    // Add other components like CategoryField, SpeciallyAbledField, StudentField, IncomeField
+    // <IncomeField value={formData.income} onChange={handleChange} />,
   ];
 
   return (
@@ -66,14 +83,16 @@ function Details() {
           {step < formSteps.length - 1 ? (
             <button
               onClick={handleNext}
-              className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+              disabled={!isStepValid()}
+              className={`p-2 rounded ${isStepValid() ? 'bg-blue-500 text-white hover:bg-blue-600' : 'bg-gray-300 text-gray-700 cursor-not-allowed'}`}
             >
               Next
             </button>
           ) : (
             <button
               onClick={handleSubmit}
-              className="bg-green-500 text-white p-2 rounded hover:bg-green-600"
+              disabled={!isFormComplete()}
+              className={`p-2 rounded ${isFormComplete() ? 'bg-green-500 text-white hover:bg-green-600' : 'bg-gray-300 text-gray-700 cursor-not-allowed'}`}
             >
               Submit
             </button>
