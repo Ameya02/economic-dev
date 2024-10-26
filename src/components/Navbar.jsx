@@ -23,8 +23,8 @@ const Navbar = () => {
           </div>
 
           {/* Button to navigate to another route */}
-          <Link to="/chat" className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200">
-            Chat
+          <Link to="/details" className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200">
+            Find Schemes..
           </Link>
         </nav>
       </header>
