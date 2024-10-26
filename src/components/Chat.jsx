@@ -13,6 +13,7 @@ const Chat = () => {
     if (initialMessage && !isInitialized) {
       handleInitialMessage(initialMessage);
       setIsInitialized(true);
+      localStorage.removeItem('formData'); // Clear formData after initializations
     }
   }, [initialMessage, isInitialized]);
 
@@ -40,7 +41,7 @@ const Chat = () => {
       `I am ${userDetails.isStudent === 'yes' ? 'a student' : 'not a student'}.`;
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/initial-question', {
+      const response = await fetch('https://schemes-57c6e0e5b392.herokuapp.com/initial-question', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -70,7 +71,7 @@ const Chat = () => {
 
     try {
       // Mock API response for demonstration
-      const response = await fetch('http://127.0.0.1:8000/initial-question', {
+      const response = await fetch('https://schemes-57c6e0e5b392.herokuapp.com/initial-question', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
