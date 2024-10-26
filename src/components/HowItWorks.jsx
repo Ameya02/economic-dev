@@ -3,6 +3,7 @@ import React from 'react';
 import check from "../images/check.png";
 import search from "../images/search.png";
 import apply from "../images/apply.png";
+import { Link } from 'react-router-dom';
 
 const HowItWorks = () => {
   const cards = [
@@ -37,6 +38,18 @@ const HowItWorks = () => {
             <p className="text-gray-700 text-center">{card.description}</p>
           </div>
         ))}
+      </div>
+      <div className="max-w-sm max-h-[400px] h-full mx-auto p-4">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">Welcome to Our Service!</h2>
+        <p className="mb-4 text-gray-600">
+          If you have any questions or need assistance, feel free to reach out to us.
+        </p>
+        
+        <Link to="/chat" 
+          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-200"
+        >        
+            Chat
+          </Link>
       </div>
     </div>
   );
